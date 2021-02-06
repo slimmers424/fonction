@@ -1,0 +1,99 @@
+public static void couleurErreurNbIdentique(GrilleGui gui){
+
+		int[][] compteurs = new int[gui.getNbLignes()][gui.getNbColonnes()];
+		for(int i=0; i<gui.getNbLignes();i++){
+
+
+
+			for(int j=0;j<gui.getNbColonnes();j++){
+				int compteur = 0;
+				boolean mettreNoir = true;
+
+				//Bas
+				if((i-1) >= 0) {
+					if (gui.getValeur(i, j).equals(gui.getValeur(i - 1, j))) {
+						compteur++;
+						if(gui.getCouleurTexte(i-1,j).equals(Constantes.COULEUR_TROP_CONSECUTIF) && compteurs[i-1][j] > 1){
+							mettreNoir = false;
+						}
+					}
+				}
+				//Gauche
+				if((j-1) >= 0) {
+					if (gui.getValeur(i, j).equals(gui.getValeur(i, j - 1))) {
+						compteur++;
+						if(gui.getCouleurTexte(i,j-1).equals(Constantes.COULEUR_TROP_CONSECUTIF) && compteurs[i][j-1] > 1){
+							mettreNoir = false;
+						}
+					}
+				}
+				//Haut
+				if((i+1) < gui.getNbLignes()) {
+					if (gui.getValeur(i, j).equals(gui.getValeur(i + 1, j))) {
+						compteur++;
+						if(gui.getCouleurTexte(i+1,j).equals(Constantes.COULEUR_TROP_CONSECUTIF) && compteurs[i+1][j] > 1){
+							mettreNoir = false;
+						}
+					}
+				}
+				//Droite
+				if((j+1) < gui.getNbColonnes()) {
+					if (gui.getValeur(i, j).equals(gui.getValeur(i, j + 1))) {
+						compteur++;
+						if(gui.getCouleurTexte(i,j+1).equals(Constantes.COULEUR_TROP_CONSECUTIF) && compteurs[i][j+1] > 1){
+							mettreNoir = false;
+						}
+					}
+				}
+
+				if(mettreNoir){
+					gui.setCouleurTexte(i, j, Constantes.COULEUR_TEXTE);
+				}
+
+				compteurs[i][j] = compteur;
+
+				if(compteur > 1){
+					if(gui.getValeur(i,j).equals("0") || gui.getValeur(i,j).equals("1")) {
+
+						gui.setCouleurTexte(i, j, Constantes.COULEUR_TROP_CONSECUTIF);
+
+						//Bas
+						if ((i - 1) >= 0) {
+							if (gui.getValeur(i - 1, j).equals("0") || gui.getValeur(i - 1, j).equals("1")) {
+								if (gui.getValeur(i, j).equals(gui.getValeur(i - 1, j))) {
+									gui.setCouleurTexte(i - 1, j, Constantes.COULEUR_TROP_CONSECUTIF);
+								}
+							}
+						}
+						//Gauche
+						if ((j - 1) >= 0) {
+							if (gui.getValeur(i, j-1).equals("0") || gui.getValeur(i, j-1).equals("1")) {
+								if (gui.getValeur(i, j).equals(gui.getValeur(i, j - 1))) {
+									gui.setCouleurTexte(i, j - 1, Constantes.COULEUR_TROP_CONSECUTIF);
+								}
+							}
+						}
+						//Haut
+						if ((i + 1) < gui.getNbLignes()) {
+							if (gui.getValeur(i + 1, j).equals("0") || gui.getValeur(i + 1, j).equals("1")) {
+								if (gui.getValeur(i, j).equals(gui.getValeur(i + 1, j))) {
+									gui.setCouleurTexte(i + 1, j, Constantes.COULEUR_TROP_CONSECUTIF);
+								}
+							}
+						}
+						//Droite
+						if ((j + 1) < gui.getNbColonnes()) {
+							if (gui.getValeur(i, j+1).equals("0") || gui.getValeur(i, j+1).equals("1")) {
+								if (gui.getValeur(i, j).equals(gui.getValeur(i, j + 1))) {
+									gui.setCouleurTexte(i, j + 1, Constantes.COULEUR_TROP_CONSECUTIF);
+								}
+							}
+						}
+					}
+				}
+			}
+
+
+		}
+
+	}
